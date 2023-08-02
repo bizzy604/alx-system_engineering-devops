@@ -1,3 +1,2 @@
 #!/bin/bash
-prev_dir = $(pwd)
-cd ..
+pwd = cd ..
