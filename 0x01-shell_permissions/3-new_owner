@@ -1,2 +1,1 @@
-#!/bin/bash
-chmod hello betty
+sudo chown hello su betty
