@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# This is for printing "Best School" 10 times using while
+a=1
+while [ $a -le 10 ]
+do
+	echo "Best School"
+	((a++))
+done
