@@ -1,0 +1,73 @@
+When you type "https://www.google.com" into your browser and press Enter, a complex series of events occur almost instantaneously. These steps involve various components of the web stack, from the client-side browser to the server-side infrastructure. Let's explore these steps in detail:
+
+# 1. DNS Request
+
+The first step is the Domain Name System (DNS) request. DNS translates the human-readable domain name "www.google.com" into an IP address that computers can use to locate the Google servers. Here’s how it works:
+
+- **Browser Cache**: The browser first checks its cache to see if it already knows the IP address for "www.google.com".
+- **OS Cache**: If not found, it queries the operating system’s cache.
+- **Router Cache**: If still not found, the query is sent to the router, which may have its own DNS cache.
+- **ISP DNS Server**: If the router doesn’t have the address cached, the request is forwarded to the ISP’s DNS servers.
+- **Recursive Search**: If the ISP’s DNS servers don’t have the answer, they perform a recursive search, querying root DNS servers, TLD (Top-Level Domain) servers, and authoritative DNS servers until the IP address is found.
+
+# 2. TCP/IP
+
+Once the IP address is obtained, the browser establishes a connection to the server using the TCP/IP protocol:
+
+- **TCP Handshake**: A three-way handshake occurs to establish a TCP connection. This involves the client sending a SYN packet to the server, the server responding with a SYN-ACK packet, and the client replying with an ACK packet.
+- **IP Routing**: Data packets are routed across the internet using IP (Internet Protocol), following paths determined by routers.
+
+# 3. Firewall
+
+Firewalls protect networks by filtering incoming and outgoing traffic based on predefined security rules. When the packets reach Google's network, they must pass through firewalls which:
+
+- **Inspect Packets**: Check the incoming packets for security threats.
+- **Allow/Deny Traffic**: Determine if the packets should be allowed or blocked based on the security policies.
+
+# 4. HTTPS/SSL
+
+Given that the URL starts with "https", it indicates a secure connection using SSL/TLS (Secure Sockets Layer/Transport Layer Security):
+
+- **SSL Handshake**: The client and server establish a secure connection through an SSL handshake, which involves:
+  - **Client Hello**: The browser sends a "Client Hello" message, proposing cipher suites and SSL/TLS versions.
+  - **Server Hello**: The server responds with a "Server Hello" message, selecting the cipher suite and sending its SSL certificate.
+  - **Certificate Verification**: The browser verifies the server’s certificate against trusted Certificate Authorities (CAs).
+  - **Session Keys**: Both parties generate session keys for encrypting the data to be exchanged.
+
+# 5. Load-Balancer
+
+Once the secure connection is established, the request is forwarded to Google’s load balancer:
+
+- **Distribute Traffic**: The load balancer distributes incoming requests across multiple servers to ensure no single server is overwhelmed, improving responsiveness and reliability.
+- **Health Checks**: It performs regular health checks on servers to ensure they are functioning correctly and removes unhealthy servers from the pool.
+
+# 6. Web Server
+
+The load balancer directs the request to one of Google’s web servers:
+
+- **Process Request**: The web server handles the HTTP request, performing tasks like URL routing, access control, and static content serving.
+- **Forward to Application Server**: For dynamic content, the web server forwards the request to the appropriate application server.
+
+# 7. Application Server
+
+The application server processes the request by executing server-side logic:
+
+- **Business Logic**: It runs the necessary backend code, which may include querying databases, processing user input, or interacting with other services.
+- **Generate Response**: After processing, the application server generates a response, usually in the form of HTML, JSON, or XML.
+
+# 8. Database
+
+If the request requires data retrieval or storage, the application server interacts with a database:
+
+- **Query Execution**: It sends SQL queries to the database to fetch or update data.
+- **Return Data**: The database executes the queries and returns the results to the application server.
+
+# Response Back to Client
+
+Finally, the generated response travels back through the same layers:
+
+- **Application Server to Web Server**: The application server sends the response to the web server.
+- **Web Server to Load Balancer**: The web server forwards the response to the load balancer.
+- **Load Balancer to Client**: The load balancer sends the response back to the client through the established TCP/IP connection.
+- **Browser**: The browser receives the response and renders the webpage for you to see.
+
